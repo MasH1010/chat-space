@@ -1,24 +1,34 @@
-# README
+# データベース設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Usersテーブル(devise利用)
+class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+  
+  has_many :groups, through: :group_users
+  has_many :group_users
+end
 
-Things you may want to cover:
+* groupsテーブル
+class Group < ApplicationRecord
+  has_many :users, through: :group_users
+  has_many :group_users
+  accepts_nested_attributes_for :group_users
+  has_many :chats
+end
 
-* Ruby version
 
-* System dependencies
+* group_usersテーブル
+class GroupUser < ApplicationRecord
+  belongs_to :user
+  belongs_to :group
+end
 
-* Configuration
+* chatsテーブル
+class Chat < ApplicationRecord
+  belongs_to :group
+end
 
-* Database creation
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
