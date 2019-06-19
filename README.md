@@ -1,6 +1,6 @@
 # データベース設計
 
-* Usersテーブル(devise利用)
+* Usersモデル(devise利用)
 ```
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
@@ -12,8 +12,28 @@ class User < ApplicationRecord
   has_many :group_users
 end
 ```
+* Usersテーブル(devise利用)
+```
+class DeviseCreateUsers < ActiveRecord::Migration[5.0]
+  def change
+    create_table :users do |t|
+      t.string :name,               null: false, unique: true
+      t.string :email,              null: false, default: ""
+      t.string :encrypted_password, null: false, default: ""
+      t.string   :reset_password_token
+      t.datetime :reset_password_sent_at
+      t.datetime :remember_created_at
+      t.timestamps null: false
+    end
 
-* groupsテーブル
+    add_index :users, :email,                unique: true
+    add_index :users, :reset_password_token, unique: true
+  end
+end
+
+```
+
+* groupsモデル
 ```
 class Group < ApplicationRecord
   has_many :users, through: :group_users
@@ -22,19 +42,60 @@ class Group < ApplicationRecord
   has_many :chats
 end
 ```
+* groupsテーブル
+```
+class CreateGroups < ActiveRecord::Migration[5.0]
+  def change
+    create_table :groups do |t|
+      t.string :name, null:false, unique: true
+      t.timestamps
+    end
+  end
+end
+```
 
-* group_usersテーブル
+* group_usersモデル
 ```
 class GroupUser < ApplicationRecord
   belongs_to :user
   belongs_to :group
 end
 ```
+* groups_usersテーブル
+```
+class CreateGroupUsers < ActiveRecord::Migration[5.0]
+  def change
+    create_table :group_users do |t|
+      t.references  :user,  index: true, foreign_key: true
+      t.references  :group, index: true, foreign_key: true
+      t.timestamps
+    end
+  end
+end
 
-* chatsテーブル
+```
+
+* chatsモデル
 ```
 class Chat < ApplicationRecord
   belongs_to :group
 end
 ```
+* chatsテーブル
+```
+class CreateChats < ActiveRecord::Migration[5.0]
+  def change
+    create_table :chats do |t|
+      t.text :text
+      t.text :image
+      t.timestamps
+    end
+  end
+end
 
+class AddGroupIdToChats < ActiveRecord::Migration[5.0]
+  def change
+    add_column :chats, :group_id, :integer
+  end
+end
+```
