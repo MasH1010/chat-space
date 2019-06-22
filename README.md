@@ -4,7 +4,7 @@
 
 |Column|Type|Options|
 |------|----|-------|
-|name|string|null: false, unique: true|
+|name|string|null: false, index: true, unique: true|
 |email|string|null: false, default: ""|
 |password|string|null: false, default: ""|
 
@@ -45,10 +45,10 @@
 
 |Column|Type|Options|
 |------|----|-------|
-|text|string||
+|text|text||
 |image|string||
 |group_id|integer|null: false, foreign_key: true|
 
 ### Association
  - belongs_to :group
- - belongs/to :user
+ - belongs_to :user
