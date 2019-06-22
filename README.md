@@ -14,6 +14,7 @@
 ### Association
  - has_many :groups, through: :group_users
  - has_many :group_users
+ - has_many :chats
 
 
 ## groupsテーブル
@@ -25,7 +26,6 @@
 ### Association
  - has_many :users, through: :group_users
  - has_many :group_users
- - accepts_nested_attributes_for :group_users
  - has_many :chats
 
 
@@ -45,9 +45,10 @@
 
 |Column|Type|Options|
 |------|----|-------|
-|text|text||
-|image|text||
+|text|string||
+|image|string||
 |group_id|integer|null: false, foreign_key: true|
 
 ### Association
  - belongs_to :group
+ - belongs/to :user
