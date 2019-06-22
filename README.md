@@ -7,6 +7,7 @@
 |name|string|null: false, unique: true|
 |email|string|null: false, default: ""|
 |password|string|null: false, default: ""|
+※ passwordの詳細の記載は省略
 
 ### Association
  - has_many :groups, through: :group_users
@@ -42,8 +43,8 @@
 
 |Column|Type|Options|
 |------|----|-------|
-|text|text|---------|
-|image|text|--------|
+|text|text||
+|image|text||
 |group_id|integer|null: false, foreign_key: true|
 
 ### Association
