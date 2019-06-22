@@ -1,7 +1,7 @@
 # データベース設計
 
-* Usersモデル(devise利用)
-```
+## Usersモデル(devise利用)
+~~~ruby
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -11,9 +11,10 @@ class User < ApplicationRecord
   has_many :groups, through: :group_users
   has_many :group_users
 end
-```
-* Usersテーブル(devise利用)
-```
+~~~
+
+## Usersテーブル(devise利用)
+~~~ruby
 class DeviseCreateUsers < ActiveRecord::Migration[5.0]
   def change
     create_table :users do |t|
@@ -30,20 +31,19 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.0]
     add_index :users, :reset_password_token, unique: true
   end
 end
+~~~
 
-```
-
-* groupsモデル
-```
+## groupsモデル
+~~~ruby
 class Group < ApplicationRecord
   has_many :users, through: :group_users
   has_many :group_users
   accepts_nested_attributes_for :group_users
   has_many :chats
 end
-```
-* groupsテーブル
-```
+~~~
+## groupsテーブル
+~~~ruby
 class CreateGroups < ActiveRecord::Migration[5.0]
   def change
     create_table :groups do |t|
@@ -52,17 +52,17 @@ class CreateGroups < ActiveRecord::Migration[5.0]
     end
   end
 end
-```
+~~~
 
-* group_usersモデル
-```
+## group_usersモデル
+~~~ruby
 class GroupUser < ApplicationRecord
   belongs_to :user
   belongs_to :group
 end
-```
-* groups_usersテーブル
-```
+~~~
+## groups_usersテーブル
+~~~ruby
 class CreateGroupUsers < ActiveRecord::Migration[5.0]
   def change
     create_table :group_users do |t|
@@ -72,17 +72,16 @@ class CreateGroupUsers < ActiveRecord::Migration[5.0]
     end
   end
 end
+~~~
 
-```
-
-* chatsモデル
-```
+## chatsモデル
+~~~ruby
 class Chat < ApplicationRecord
   belongs_to :group
 end
-```
-* chatsテーブル
-```
+~~~
+## chatsテーブル
+~~~ruby
 class CreateChats < ActiveRecord::Migration[5.0]
   def change
     create_table :chats do |t|
@@ -98,4 +97,4 @@ class AddGroupIdToChats < ActiveRecord::Migration[5.0]
     add_column :chats, :group_id, :integer
   end
 end
-```
+~~~
