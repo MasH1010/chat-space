@@ -7,7 +7,9 @@
 |name|string|null: false, unique: true|
 |email|string|null: false, default: ""|
 |password|string|null: false, default: ""|
-※ passwordの詳細の記載は省略
+
+※ deviseで作成される他のカラム「encrypted_password」「reset_password_token」「reset_password_sent_at」
+「remember_created_at」の記載は省略
 
 ### Association
  - has_many :groups, through: :group_users
